@@ -54,5 +54,5 @@ func (i Identity) Authenticate() (UserDetails, error) {
 		return UserDetails{}, err
 	}
 
-	return UserDetails{username: u.Username, home: u.HomeDir, group: u.Gid}, nil
+	return UserDetails{Username: u.Username, Home: u.HomeDir, Group: u.Gid}, nil
 }
