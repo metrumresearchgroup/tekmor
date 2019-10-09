@@ -2,15 +2,16 @@ package tekmor
 
 import (
 	"errors"
-	"github.com/msteinert/pam"
 	"os/user"
+
+	"github.com/msteinert/pam"
 )
 
 //Identity is the core component for Tekmor used for authentication against PAM
 type Identity struct {
-	username string
-	password string
-	details  UserDetails
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Details  UserDetails
 }
 
 //UserDetails is a struct containing Unix Shell details for an account that has PAM Authenticated
@@ -26,10 +27,10 @@ func (i Identity) Authenticate() (UserDetails, error) {
 		switch s {
 		//PAM will request the password with echo off, so we will return the auth Password here.
 		case pam.PromptEchoOff:
-			return i.password, nil
+			return i.Password, nil
 		//PAM will request the username with prompt on. So we'll return the username here
 		case pam.PromptEchoOn:
-			return i.username, nil
+			return i.Username, nil
 		//If we receive an error message back from PAM, let's generate an error and return it.
 		case pam.ErrorMsg:
 			return "", errors.New(msg)
@@ -48,7 +49,7 @@ func (i Identity) Authenticate() (UserDetails, error) {
 	}
 
 	//Successfully authenticated with PAM Let's pull the user details into the struct for use in tokens
-	u, err := user.Lookup(i.username)
+	u, err := user.Lookup(i.Username)
 	if err != nil {
 		return UserDetails{}, err
 	}
