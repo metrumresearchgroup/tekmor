@@ -16,9 +16,9 @@ type Identity struct {
 
 //UserDetails is a struct containing Unix Shell details for an account that has PAM Authenticated
 type UserDetails struct {
-	username string
-	home     string
-	group    string
+	Username string
+	Home     string
+	Group    string
 }
 
 //Authenticate handles determining whether or not an Identity is valid per PAM
