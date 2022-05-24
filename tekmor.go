@@ -47,6 +47,10 @@ func (i Identity) Authenticate() (UserDetails, error) {
 	if err != nil {
 		return UserDetails{}, err
 	}
+	err = t.AcctMgmt(0)
+	if err != nil {
+		return UserDetails{}, err
+	}
 
 	//Successfully authenticated with PAM Let's pull the user details into the struct for use in tokens
 	u, err := user.Lookup(i.Username)
